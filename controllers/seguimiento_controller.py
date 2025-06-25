@@ -1,7 +1,7 @@
 import os
 from flask import request, redirect, url_for, Blueprint, abort, current_app
 from werkzeug.utils import secure_filename
-from flask_login import current_user  # <--- importamos current_user
+from flask_login import current_user
 from models.seguimiento_model import Seguimiento
 from models.caso_model import Caso
 from models.usuario_model import Usuario
@@ -14,7 +14,7 @@ seguimiento_bp = Blueprint('seguimiento', __name__, url_prefix="/seguimientos")
 @seguimiento_bp.before_request
 def verificar_autenticacion():
     if not current_user.is_authenticated:
-        return redirect(url_for('home'))  # O la ruta que uses para login
+        return redirect(url_for('home'))  # Ruta de login o inicio
 
 def guardar_archivo(archivo):
     if archivo and archivo.filename != '':
@@ -52,6 +52,7 @@ def create():
         )
         seguimiento.save()
         return redirect(url_for('seguimiento.index'))
+    
     casos = Caso.get_all()
     usuarios = Usuario.get_all()
     return seguimiento_view.create(casos=casos, usuarios=usuarios)
@@ -61,20 +62,26 @@ def edit(id):
     seguimiento = Seguimiento.get_by_id(id)
     if not seguimiento:
         abort(404)
+
     if request.method == 'POST':
         data = request.form
         archivo = request.files.get('archivo')
         archivo_url = guardar_archivo(archivo) or seguimiento.archivo_url
 
+        fecha = datetime.strptime(data['fecha'], '%Y-%m-%d').date()
+        proximo_plazo = data.get('proximo_plazo')
+        proximo_plazo = datetime.strptime(proximo_plazo, '%Y-%m-%d').date() if proximo_plazo else None
+
         seguimiento.update(
-            id_caso=data['id_caso'],
-            id_usuario=data['id_usuario'],
-            fecha=data['fecha'],
+            id_caso=int(data['id_caso']),
+            id_usuario=int(data['id_usuario']),
+            fecha=fecha,
             descripcion=data['descripcion'],
             archivo_url=archivo_url,
-            proximo_plazo=data.get('proximo_plazo')
+            proximo_plazo=proximo_plazo
         )
         return redirect(url_for('seguimiento.index'))
+    
     casos = Caso.get_all()
     usuarios = Usuario.get_all()
     return seguimiento_view.edit(seguimiento, casos=casos, usuarios=usuarios)
