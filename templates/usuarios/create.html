@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %} USUARIOS | CREATE {% endblock %}
+
+{% block content %}
+<h1>Registrar Usuario</h1>
+<form action="{{ url_for('usuario.create') }}" method="POST">
+<div class="mb-3">
+<label class="form-label">Rol</label>
+<select class="form-select" id="id_rol" name="id_rol" required="">
+<option disabled="" selected="" value="">Seleccione un rol</option>
+            {% for rol in roles %}
+                <option value="{{ rol.id_rol }}">{{ rol.nombre_rol }}</option>
+            {% endfor %}
+        </select>
+</div>
+<div class="mb-3">
+<label class="form-label">Nombre</label>
+<input class="form-control" name="nombre" required="" type="text"/>
+</div>
+<div class="mb-3">
+<label class="form-label">Usuario</label>
+<input class="form-control" name="usuario" required="" type="text"/>
+</div>
+<div class="mb-3">
+<label class="form-label">Contraseña</label>
+<input class="form-control" name="password" required="" type="password"/>
+</div>
+<div class="mb-3">
+<label class="form-label">Teléfono</label>
+<input class="form-control" name="telefono" type="text"/>
+</div>
+<div class="mb-3">
+<label class="form-label">Dirección</label>
+<input class="form-control" name="direccion" required="" type="text"/>
+</div>
+<!-- 🔽 Agrupamos matrícula y especialidad en un contenedor -->
+<div id="datos-abogado">
+<div class="mb-3">
+<label class="form-label">Matrícula</label>
+<input class="form-control" id="matricula" name="matricula" type="text"/>
+</div>
+<div class="mb-3">
+<label class="form-label">Especialidad</label>
+<select class="form-select" id="id_especialidad" name="id_especialidad">
+<option disabled="" selected="" value="">Seleccione una especialidad</option>
+                {% for esp in especialidades %}
+                    <option value="{{ esp.id_especialidad }}">{{ esp.nombre_especialidad }}</option>
+                {% endfor %}
+            </select>
+</div>
+</div>
+<div class="mb-3">
+<label class="form-label">Estado de Usuario</label>
+<select class="form-select" name="id_estado_usuario" required="">
+<option disabled="" selected="" value="">Seleccione un estado</option>
+            {% for estados in estado_usuarios %}
+                <option value="{{ estados.id_estado_usuario }}">{{ estados.nombre_estado }}</option>
+            {% endfor %}
+        </select>
+</div>
+<div class="form-check mb-3">
+<input checked="" class="form-check-input" id="activo" name="activo" type="checkbox"/>
+<label class="form-check-label" for="activo">Activo</label>
+</div>
+<button class="btn btn-primary" style=" background-color:rgb(83, 37, 32); color: white; border: none;" type="submit">Registrar Usuario</button>
+<a class="btn btn-secondary" href="{{ url_for('usuario.index') }}" style=" background-color:rgb(162, 105, 56); color: white; border: none;">Cancelar</a>
+</form>
+<!-- 🔽 Script para mostrar/ocultar campos según rol -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const rolSelect = document.getElementById('id_rol');
+        const datosAbogado = document.getElementById('datos-abogado');
+        const matriculaInput = document.getElementById('matricula');
+        const especialidadSelect = document.getElementById('id_especialidad');
+
+        function actualizarCampos() {
+            const rolTexto = rolSelect.options[rolSelect.selectedIndex]?.text.toLowerCase() || "";
+            const esAbogado = rolTexto.includes('abogado');
+
+            // Mostrar u ocultar el bloque
+            datosAbogado.style.display = esAbogado ? 'block' : 'none';
+
+            // Activar/desactivar inputs para que no se envíen
+            matriculaInput.disabled = !esAbogado;
+            especialidadSelect.disabled = !esAbogado;
+
+            // Limpiar si no es abogado
+            if (!esAbogado) {
+                matriculaInput.value = '';
+                especialidadSelect.selectedIndex = 0;
+            }
+        }
+
+        actualizarCampos();
+        rolSelect.addEventListener('change', actualizarCampos);
+    });
+</script>
+{% endblock %}

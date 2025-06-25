@@ -1,0 +1,106 @@
+{% extends 'layouts/inicio_base.html' %}
+{% block title %}Inicio | Sistema Jurídico{% endblock %}
+
+{% block content %}
+
+<header class="bg-primary text-white text-center py-5" style="background: linear-gradient(to right,rgb(102, 58, 38),rgb(141, 82, 37));">
+<div class="container">
+<h1 class="display-4 fw-bold">Bienvenido al Sistema Jurídico</h1>
+<p class="lead mb-4">Gestión inteligente de procesos legales</p>
+<button class="btn btn-light btn-lg" data-bs-target="#loginModal" data-bs-toggle="modal">Iniciar Sesión</button>
+</div>
+</header>
+<section class="py-5" id="sobre-nosotros">
+<div class="container">
+<h2 class="mb-4 text-center">Sobre Nosotros</h2>
+<p class="lead text-center text-muted">
+      Somos un equipo comprometido con brindar soluciones tecnológicas para la gestión eficiente y segura de procesos legales.
+    </p>
+<div class="row mt-4">
+<div class="col-md-4 text-center">
+<i class="bi bi-people-fill display-4 text-primary mb-3"></i>
+<h5>Profesionales Expertos</h5>
+<p>Abogados con amplia experiencia y conocimiento en diferentes ramas del derecho.</p>
+</div>
+<div class="col-md-4 text-center">
+<i class="bi bi-shield-lock-fill display-4 text-primary mb-3"></i>
+<h5>Seguridad y Confianza</h5>
+<p>Protegemos la información con altos estándares de seguridad.</p>
+</div>
+<div class="col-md-4 text-center">
+<i class="bi bi-speedometer2 display-4 text-primary mb-3"></i>
+<h5>Rapidez y Eficiencia</h5>
+<p>Optimiza la gestión de tus casos con un sistema ágil y fácil de usar.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="bg-light py-5" id="servicios">
+<div class="container">
+<h2 class="mb-4 text-center">Servicios</h2>
+<div class="row">
+<div class="col-md-6">
+<ul class="list-group list-group-flush">
+<li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i> Gestión integral de casos jurídicos</li>
+<li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i> Seguimiento de audiencias y documentación</li>
+<li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i> Registro y control de pagos</li>
+</ul>
+</div>
+<div class="col-md-6">
+<img alt="Servicios jurídicos" class="img-fluid rounded shadow-sm" src="{{ url_for('static', filename='imagenes/sistema_juridico.jpg') }}"/>
+</div>
+</div>
+</div>
+</section>
+<section class="py-5" id="contacto">
+<div class="container">
+<h2 class="mb-4 text-center">Contacto</h2>
+<div class="row justify-content-center">
+<div class="col-md-8">
+<form>
+<div class="mb-3">
+<label class="form-label" for="nombre">Nombre</label>
+<input class="form-control" id="nombre" placeholder="Tu nombre" required="" type="text"/>
+</div>
+<div class="mb-3">
+<label class="form-label" for="correo">Correo Electrónico</label>
+<input class="form-control" id="correo" placeholder="nombre@ejemplo.com" required="" type="email"/>
+</div>
+<div class="mb-3">
+<label class="form-label" for="mensaje">Mensaje</label>
+<textarea class="form-control" id="mensaje" placeholder="Escribe tu mensaje aquí..." required="" rows="4"></textarea>
+</div>
+<button class="btn btn-primary w-100" type="submit">Enviar</button>
+</form>
+</div>
+</div>
+</div>
+</section>
+<!-- Modal de Login -->
+<div aria-hidden="true" aria-labelledby="loginModalLabel" class="modal fade" id="loginModal" tabindex="-1">
+<div class="modal-dialog">
+<form action="{{ url_for('login') }}" class="modal-content" method="POST">
+<div class="modal-header">
+<h5 class="modal-title" id="loginModalLabel">Iniciar Sesión</h5>
+<button aria-label="Cerrar" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+</div>
+<div class="modal-body">
+<div class="mb-3">
+<label class="form-label">Nombre de usuario</label>
+<input class="form-control" name="username" required="" type="text"/>
+</div>
+<div class="mb-3">
+<label class="form-label">Contraseña</label>
+<input class="form-control" name="password" required="" type="password"/>
+</div>
+</div>
+<div class="modal-footer">
+<button class="btn btn-primary" type="submit">Ingresar</button>
+</div>
+</form>
+</div>
+</div>
+<footer class="bg-dark text-white text-center py-3 mt-4">
+<p class="mb-0">© 2025 Sistema Jurídico - Todos los derechos reservados.</p>
+</footer>
+{% endblock %}

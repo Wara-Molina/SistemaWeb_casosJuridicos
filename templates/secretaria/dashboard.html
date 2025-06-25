@@ -1,0 +1,53 @@
+{% extends 'base_secretaria.html' %}
+{% block title %}Dashboard Secretaria{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+<h2 class="mb-2">Bienvenido, {{ current_user.nombre }}</h2>
+<p class="text-muted">Rol: {{ current_user.rol }}</p>
+<hr/>
+<div class="row">
+<!-- Tarjeta de clientes -->
+<div class="col-md-4 mb-4">
+<div class="card shadow-sm h-100">
+<div class="card-body">
+<h5 class="card-title">Clientes</h5>
+<p class="card-text">Consulta la base de datos de clientes activos.</p>
+<a class="btn btn-secondary" href="{{ url_for('cliente.index') }}" style=" background-color:rgb(147, 86, 71); color: white; border: none;">Ver Clientes</a>
+</div>
+</div>
+</div>
+<!-- Tarjeta de pagos -->
+<div class="col-md-4 mb-4">
+<div class="card shadow-sm h-100">
+<div class="card-body">
+<h5 class="card-title">Pagos</h5>
+<p class="card-text">Quiere realizar nuevos pagos?</p>
+<a class="btn btn-success" href="{{ url_for('pago.index') }}" style=" background-color: #C19A6B; color: white; border: none;">Ver Pagos</a>
+</div>
+</div>
+</div>
+<!-- Tarjeta de casos -->
+<div class="col-md-4 mb-4">
+<div class="card shadow-sm h-100">
+<div class="card-body">
+<h5 class="card-title">Casos</h5>
+<p class="card-text">Consulta Casos activos.</p>
+<a class="btn btn-secondary" href="{{ url_for('caso.index') }}" style=" background-color:rgb(133, 85, 48); color: white; border: none;">Ver Casos</a>
+</div>
+</div>
+</div>
+<!-- Tarjeta de documentos -->
+<div class="col-md-4 mb-4">
+<div class="card shadow-sm h-100">
+<div class="card-body">
+<h5 class="card-title">Docuemetos</h5>
+<p class="card-text">Revisar documentos subidos.</p>
+<a class="btn btn-success" href="{{ url_for('documento.index') }}" style=" background-color:rgb(164, 84, 75); color: white; border: none;">Ver Documentos</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}
+

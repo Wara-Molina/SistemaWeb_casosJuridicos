@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard Administrador{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+<h2 class="mb-2">Bienvenido, {{ current_user.nombre }}</h2>
+<p class="text-muted">Rol: {{ current_user.rol }}</p>
+<hr/>
+<div class="row">
+<!-- Tarjeta de gestión de usuarios -->
+<div class="col-md-4 mb-4">
+<div class="card shadow-sm h-100">
+<div class="card-body">
+<h5 class="card-title">Usuarios</h5>
+<p class="card-text">Administra los usuarios registrados en el sistema.</p>
+<a class="btn btn-primary" href="{{ url_for('usuario.index') }}" style=" background-color:rgb(162, 121, 66); color: white; border: none;">Ver Usuarios</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}
