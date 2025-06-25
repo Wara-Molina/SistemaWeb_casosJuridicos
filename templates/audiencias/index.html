@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %} AUDIENCIAS {% endblock %}
+
+{% block content %}
+<h1>Lista de Audiencias</h1>
+
+  <a href="{{ url_for('audiencia.create_general') }}" class="btn btn-primary mb-3" style=" background-color:rgb(123, 101, 35); color: white; border: none;">
+    Nueva Audiencia
+  </a>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Caso</th>
+      <th>Cliente</th>
+      <th>Fecha</th>
+      <th>Hora</th>
+      <th>Lugar</th>
+      <th>Observaciones</th>
+      <th>Estado Audiencia</th>
+      <th>Activo</th>
+      <th>Editar</th>
+      <th>Activo / Inactivo</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in audiencias %}
+    <tr class="{% if not item.activo %}table-secondary text-muted{% endif %}">
+      <td>{{ item.id_audiencia }}</td>
+      <td>{{ item.caso.descripcion if item.caso else 'N/A' }}</td>
+      <td>
+        {{ item.caso.cliente.nombre if item.caso and item.caso.cliente else 'N/A' }}
+      </td>
+      <td>{{ item.fecha_audiencia }}</td>
+      <td>{{ item.hora_audiencia.strftime('%H:%M') }}</td>
+      <td>{{ item.lugar }}</td>
+      <td>{{ item.observaciones or '' }}</td>
+      <td>{{ item.estado_audiencia.nombre_estado_audiencia if item.estado_audiencia else 'N/A' }}</td>
+      <td>
+
+        {% if item.activo %}
+          <span class="badge bg-success">Sí</span>
+        {% else %}
+          <span class="badge bg-danger">No</span>
+        {% endif %}
+      </td>
+      <td>
+
+        <a href="{{ url_for('audiencia.edit', id_audiencia=item.id_audiencia) }}" class="btn btn-warning btn-sm" style=" background-color:rgb(154, 114, 61); color: white; border: none;">Editar</a>
+      </td>
+      <td>
+        <!-- Switch para activar / desactivar -->
+        <form action="{{ url_for('audiencia.toggle_activo', id_audiencia=item.id_audiencia) }}" method="POST" style="display:inline;">
+        {# <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> #}
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" name="activo" onchange="this.form.submit()" {% if item.activo %}checked{% endif %} >
+          </div>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

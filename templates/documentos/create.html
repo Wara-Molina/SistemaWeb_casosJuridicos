@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %} DOCUMENTOS | CREATE {% endblock %}
+
+{% block content %}
+<h1>Registrar Documento</h1>
+<form action="{{ url_for('documento.create') }}" enctype="multipart/form-data" method="POST">
+<div class="mb-3">
+<label class="form-label" for="id_caso">Caso</label>
+<select class="form-select" id="id_caso" name="id_caso" required="">
+<option disabled="" selected="" value="">Seleccione un caso</option>
+            {% for caso in casos %}
+                <option value="{{ caso.id_caso }}">{{ caso.descripcion }}</option>
+            {% endfor %}
+        </select>
+</div>
+<div class="mb-3">
+<label class="form-label" for="titulo">Título</label>
+<input class="form-control" id="titulo" name="titulo" required="" type="text"/>
+</div>
+<div class="mb-3">
+<label class="form-label" for="descripcion">Descripción</label>
+<textarea class="form-control" id="descripcion" name="descripcion" rows="3"></textarea>
+</div>
+<div class="mb-3">
+<label class="form-label" for="archivo">Archivo</label>
+<input class="form-control" id="archivo" name="archivo" required="" type="file"/>
+</div>
+<div class="form-check mb-3">
+<input checked="" class="form-check-input" id="activo" name="activo" type="checkbox"/>
+<label class="form-check-label" for="activo">Activo</label>
+</div>
+<button class="btn btn-primary" style=" background-color:rgb(133, 85, 48); color: white; border: none;" type="submit">Registrar Documento</button>
+<a class="btn btn-secondary" href="{{ url_for('documento.index') }}" style=" background-color:rgb(153, 68, 59); color: white; border: none;">Cancelar</a>
+</form>
+{% endblock %}

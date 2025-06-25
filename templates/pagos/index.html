@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %} PAGOS {% endblock %}
+
+{% block content %}
+
+<h1>Lista de Pagos</h1>
+<a class="btn btn-success mb-3" href="{{ url_for('pago.create') }}" style=" background-color:rgb(141, 121, 61); color: white; border: none;">Nuevo Pago</a>
+<table class="table table-striped">
+<thead>
+<tr>
+<th>Cliente</th>
+<th>Caso</th>
+<th>Fecha</th>
+<th>Monto</th>
+<th>Método</th>
+<th>Estado</th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+        {% for pago in pagos %}
+        <tr>
+<td>{{ pago.cliente.nombre if pago.cliente else 'N/A' }}</td>
+<td>{{ pago.caso.descripcion if pago.caso else 'N/A'  }}</td>
+<td>{{ pago.fecha_pago.strftime('%d/%m/%Y') }}</td>
+<td>Bs. {{ "{:.2f}".format(pago.monto_pagado) }}</td>
+<td>{{ pago.metodo_pago}}</td>
+<td>{{ pago.estado_pago.estado if pago.estado_pago }}</td>
+<td>
+<a class="btn btn-info" href="{{ url_for('pago.recibo', id=pago.id_pago) }}" style=" background-color:rgb(165, 109, 66); color: white; border: none;">Ver Recibo</a>
+</td>
+<td>
+<a class="btn btn-warning" href="{{ url_for('pago.edit', id=pago.id_pago) }}" style=" background-color:rgb(167, 120, 59); color: white; border: none;">Editar</a>
+</td>
+<td>
+<form action="{{ url_for('pago.delete', id=pago.id_pago) }}" method="post" style="display:inline;">
+<button class="btn btn-danger" onclick="return confirm('¿Estás seguro de eliminar este pago?')" style=" background-color: #BFA6A0; color: white; border: none;" type="submit">Eliminar</button>
+</form>
+</td>
+</tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

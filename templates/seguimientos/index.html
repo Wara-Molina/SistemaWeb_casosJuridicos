@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %} SEGUIMIENTOS {% endblock %}
+
+{% block content %}
+
+<h1>Lista de Seguimientos</h1>
+<a class="btn btn-success mb-3" href="{{ url_for('seguimiento.create') }}" style=" background-color:rgb(154, 115, 64); color: white; border: none;">Nuevo Seguimiento</a>
+<table class="table table-striped">
+<thead>
+<tr>
+<th>ID</th>
+<th>Caso</th>
+<th>Usuario</th>
+<th>Fecha</th>
+<th>Descripción</th>
+<th>Archivo</th>
+<th>Próximo Plazo</th>
+<th></th> <!-- Editar -->
+<th></th> <!-- Eliminar -->
+</tr>
+</thead>
+<tbody>
+        {% for seguimiento in seguimientos %}
+        <tr>
+<td>{{ seguimiento.id }}</td>
+<td>{{ seguimiento.caso.descripcion if seguimiento.caso else 'N/A' }}</td>
+<td>{{ seguimiento.usuario.nombre if seguimiento.usuario else 'N/A' }}</td>
+<td>{{ seguimiento.fecha.strftime('%d/%m/%Y') }}</td>
+<td>{{ seguimiento.descripcion }}</td>
+<td>
+                {% if seguimiento.archivo_url %}
+                    <a href="{{ url_for('static', filename=seguimiento.archivo_url) }}" target="_blank">Ver archivo</a>
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+<td>
+                {% if seguimiento.proximo_plazo %}
+                    {{ seguimiento.proximo_plazo.strftime('%d/%m/%Y') }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+<td>
+<a class="btn" style="background-color:#D8B6A4;color:black;" href="{{ url_for('seguimiento.edit', id=seguimiento.id) }}" style=" background-color:rgb(134, 80, 66); color: white; border: none;">Editar</a>
+</td>
+<td>
+<form action="{{ url_for('seguimiento.delete', id=seguimiento.id) }}" method="post" style="display:inline;">
+<button class="btn" style="background-color:#7B3F00;color:white;" onclick="return confirm('¿Estás seguro de eliminar este seguimiento?')" style=" background-color:rgb(150, 113, 67); color: white; border: none;" type="submit">Eliminar</button>
+</form>
+</td>
+</tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

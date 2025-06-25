@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %} PAGOS | CREATE {% endblock %}
+
+{% block content %}
+<h1>Registrar Nuevo Pago</h1>
+<form action="{{ url_for('pago.create') }}" method="POST">
+
+<div class="mb-3">
+  <label class="form-label">Cliente</label>
+  <select class="form-select" name="id_cliente" required>
+    {% for cliente in clientes %}
+      <option value="{{ cliente.id }}" {% if pago and pago.id_cliente == cliente.id %}selected{% endif %}>
+        {{ cliente.nombre }}
+      </option>
+    {% endfor %}
+  </select>
+</div>
+
+<div class="mb-3">
+  <label class="form-label">Caso</label>
+  <select class="form-select" name="id_caso" required>
+    {% for caso in casos %}
+      <option value="{{ caso.id_caso }}" {% if pago and pago.id_caso == caso.id_caso %}selected{% endif %}>
+        {{ caso.descripcion }}
+      </option>
+    {% endfor %}
+  </select>
+</div>
+
+<div class="mb-3">
+  <label class="form-label">Fecha de Pago</label>
+  <input class="form-control" name="fecha_pago" required type="date" />
+</div>
+
+<div class="mb-3">
+  <label class="form-label">Monto Pagado</label>
+  <input class="form-control" name="monto_pagado" required step="0.01" type="number" />
+</div>
+
+<div class="mb-3">
+  <label class="form-label">Método de Pago</label>
+  <input class="form-control" name="metodo_pago" type="text" />
+</div>
+
+<div class="mb-3">
+  <label class="form-label">Observaciones</label>
+  <textarea class="form-control" name="observaciones" rows="3"></textarea>
+</div>
+
+<div class="mb-3">
+  <label class="form-label">Estado del Pago</label>
+  <select class="form-select" name="id_estado_pago">
+    <option value="">-- Seleccionar --</option>
+    {% for estado in estados %}
+      <option value="{{ estado.id_estado_pago }}" {% if pago and pago.id_estado_pago == estado.id_estado_pago %}selected{% endif %}>
+        {{ estado.estado }}
+      </option>
+    {% endfor %}
+  </select>
+</div>
+
+<button class="btn btn-success" style="background-color:rgb(145, 72, 64); color: white; border: none;" type="submit">Guardar Pago</button>
+<a class="btn btn-secondary" href="{{ url_for('pago.index') }}" style="background-color:rgb(159, 105, 58); color: white; border: none;">Cancelar</a>
+
+</form>
+{% endblock %}

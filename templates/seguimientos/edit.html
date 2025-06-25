@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %} SEGUIMIENTOS | EDIT {% endblock %}
+
+{% block content %}
+<h1>Editar Seguimiento</h1>
+<form action="{{ url_for('seguimiento.edit', id=seguimiento.id) }}" enctype="multipart/form-data" method="POST">
+<div class="mb-3">
+<label class="form-label">Caso</label>
+<select class="form-select" name="id_caso" required="">
+            {% for caso in casos %}
+                <option value="{{ caso.id_caso }}" {% if seguimiento.id_caso == caso.id_caso %}selected{% endif %}>
+                 {{ caso.descripcion }}
+            </option>
+
+            {% endfor %}
+        </select>
+</div>
+<div class="mb-3">
+<label class="form-label">Usuario</label>
+<select class="form-select" name="id_usuario" required="">
+            {% for usuario in usuarios %}
+               <option value="{{ usuario.id_usuario }}" {% if seguimiento.id_usuario == usuario.id_usuario %}selected{% endif %}>
+                 {{ usuario.nombre }}
+                </option>
+
+            {% endfor %}
+        </select>
+</div>
+<div class="mb-3">
+<label class="form-label">Fecha</label>
+<input class="form-control" name="fecha" required="" type="date" value="{{ seguimiento.fecha.strftime('%Y-%m-%d') }}"/>
+</div>
+<div class="mb-3">
+<label class="form-label">Descripción</label>
+<textarea class="form-control" name="descripcion" required="" rows="4">{{ seguimiento.descripcion }}</textarea>
+</div>
+<div class="mb-3">
+<label class="form-label">Archivo (opcional)</label>
+<input class="form-control" name="archivo" type="file"/>
+        {% if seguimiento.archivo_url %}
+            <p>Archivo actual: <a href="{{ seguimiento.archivo_url }}" target="_blank">Ver archivo</a></p>
+        {% endif %}
+    </div>
+<div class="mb-3">
+<label class="form-label">Próximo Plazo (opcional)</label>
+<input class="form-control" name="proximo_plazo" type="date" value="{{ seguimiento.proximo_plazo.strftime('%Y-%m-%d') if seguimiento.proximo_plazo }}"/>
+</div>
+<button class="btn" style="background-color:#A9746E;color:white;" style=" background-color:rgb(154, 133, 70); color: white; border: none;" type="submit">Actualizar Seguimiento</button>
+<a class="btn btn-secondary" href="{{ url_for('seguimiento.index') }}" style=" background-color: #A47149; color: white; border: none;">Cancelar</a>
+</form>
+{% endblock %}

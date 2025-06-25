@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %} CLIENTES | EDIT {% endblock %}
+
+{% block content %}
+
+<h1>Actualizar Cliente</h1>
+<form action="{{ url_for('cliente.edit', id=cliente.id) }}" method="POST">
+<div class="mb-3">
+<label class="form-label">Nombre</label>
+<input class="form-control" name="nombre" required="" type="text" value="{{ cliente.nombre }}"/>
+</div>
+<div class="mb-3">
+<label class="form-label">Cédula</label>
+<input class="form-control" name="cedula" required="" type="number" value="{{ cliente.cedula }}"/>
+</div>
+<div class="mb-3">
+<label class="form-label">Dirección</label>
+<input class="form-control" name="direccion" required="" type="text" value="{{ cliente.direccion }}"/>
+</div>
+<div class="mb-3">
+<label class="form-label">Teléfono</label>
+<input class="form-control" name="telefono" required="" type="number" value="{{ cliente.telefono }}"/>
+</div>
+<div class="mb-3">
+<label class="form-label">Correo Electrónico</label>
+<input class="form-control" name="email" required="" type="email" value="{{ cliente.email }}"/>
+</div>
+<div class="mb-3 form-check">
+<input class="form-check-input" type="checkbox" id="activo" name="activo" {% if cliente.activo %}checked{% endif %}>
+
+<label class="form-check-label" for="activo">¿Cliente activo?</label>
+</div>
+<button class="btn btn-primary" style=" background-color:rgb(147, 107, 58); color: white; border: none;" type="submit">Actualizar Cliente</button>
+<a class="btn btn-secondary" href="{{ url_for('cliente.index') }}" style=" background-color:rgb(135, 89, 53); color: white; border: none;">Cancelar</a>
+</form>
+
+{% endblock %}

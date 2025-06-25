@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %} CLIENTES | CREATE {% endblock %}
+
+{% block content %}
+
+<h1>Registro de Clientes</h1>
+<form action="{{url_for('cliente.create')}}" method="POST">
+<div class="mb-3">
+<label class="form-label" for="">Nombre</label>
+<input class="form-control" name="nombre" required="" type="text"/>
+</div>
+<div class="mb-3">
+<label class="form-label" for="">Cedula</label>
+<input class="form-control" name="cedula" required="" type="number"/>
+</div>
+<div class="mb-3">
+<label class="form-label" for="">Direccion</label>
+<input class="form-control" name="direccion" required="" type="text"/>
+</div>
+<div class="mb-3">
+<label class="form-label" for="">Telefono</label>
+<input class="form-control" name="telefono" required="" type="number"/>
+</div>
+<div class="mb-3">
+<label class="form-label" for="">Correo Electronico</label>
+<input class="form-control" name="email" required="" type="email"/>
+</div>
+<div class="mb-3 form-check">
+<input checked="" class="form-check-input" id="activo" name="activo" type="checkbox"/>
+<label class="form-check-label" for="activo">¿Cliente activo?</label>
+</div>
+<button class="btn btn-primary" style=" background-color:rgb(130, 66, 50); color: white; border: none;" type="submit">Registrar Cliente</button>
+</form>
+
+{% endblock %}

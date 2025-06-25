@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %} SEGUIMIENTOS | CREATE {% endblock %}
+
+{% block content %}
+<h1>Registrar Seguimiento</h1>
+<form action="{{ url_for('seguimiento.create') }}" enctype="multipart/form-data" method="POST">
+<div class="mb-3">
+<label class="form-label">Caso</label>
+<select class="form-select" name="id_caso" required="">
+<option disabled="" selected="" value="">Seleccione un caso</option>
+            {% for caso in casos %}
+                <option value="{{ caso.id_caso }}">{{ caso.descripcion }}</option>
+            {% endfor %}
+        </select>
+</div>
+<div class="mb-3">
+<label class="form-label">Usuario</label>
+<select class="form-select" name="id_usuario" required="">
+<option disabled="" selected="" value="">Seleccione un usuario</option>
+            {% for usuario in usuarios %}
+                <option value="{{ usuario.id_usuario }}">{{ usuario.nombre }}</option>
+            {% endfor %}
+        </select>
+</div>
+<div class="mb-3">
+<label class="form-label">Fecha</label>
+<input class="form-control" name="fecha" required="" type="date"/>
+</div>
+<div class="mb-3">
+<label class="form-label">Descripción</label>
+<textarea class="form-control" name="descripcion" required="" rows="4"></textarea>
+</div>
+<div class="mb-3">
+<label class="form-label">Archivo (opcional)</label>
+<input class="form-control" name="archivo" type="file"/>
+</div>
+<div class="mb-3">
+<label class="form-label">Próximo Plazo (opcional)</label>
+<input class="form-control" name="proximo_plazo" type="date"/>
+</div>
+<button class="btn" style="background-color:#A9746E;color:white;" style=" background-color:rgb(167, 136, 93); color: white; border: none;" type="submit">Registrar Seguimiento</button>
+<a class="btn btn-secondary" href="{{ url_for('seguimiento.index') }}" style=" background-color:rgb(149, 101, 69); color: white; border: none;">Cancelar</a>
+</form>
+{% endblock %}

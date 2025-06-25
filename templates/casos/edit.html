@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}CASOS | EDIT {% endblock %}
+
+{% block content %}
+<h2>Editar Caso #{{ caso.id_caso }}</h2>
+<form action="{{ url_for('caso.edit', id_caso=caso.id_caso) }}" method="post">
+<div class="mb-3">
+<label class="form-label" for="id_cliente">Cliente</label>
+<select class="form-select" id="id_cliente" name="id_cliente" required="">
+      {% for cliente in clientes %}
+        <option value="{{ cliente.id }}" {% if cliente.id == caso.id_cliente %}selected{% endif %}>{{ cliente.nombre }}</option>
+
+      {% endfor %}
+    </select>
+</div>
+<div class="mb-3">
+<label class="form-label" for="id_usuario">Usuario</label>
+<select class="form-select" id="id_usuario" name="id_usuario" required="">
+      {% for usuario in usuarios %}
+       <option value="{{ usuario.id_usuario }}" {% if usuario.id_usuario == caso.id_usuario %}selected{% endif %}>{{ usuario.nombre }}</option>
+
+      {% endfor %}
+    </select>
+</div>
+<div class="mb-3">
+<label class="form-label" for="id_tipo">Tipo de Caso</label>
+<select class="form-select" id="id_tipo" name="id_tipo" required="">
+      {% for tipo in tipos_casos %}
+        <option value="{{ tipo.id_tipo_caso }}" {% if tipo.id_tipo_caso == caso.id_tipo %}selected{% endif %}>{{ tipo.nombre_tipo }}</option>
+
+      {% endfor %}
+    </select>
+</div>
+<div class="mb-3">
+<label class="form-label" for="id_estado_caso">Estado del Caso</label>
+<select class="form-select" id="id_estado_caso" name="id_estado_caso" required="">
+      {% for estado in estados_caso %}
+       <option value="{{ estado.id_estado_caso }}" {% if estado.id_estado_caso == caso.id_estado_caso %}selected{% endif %}>{{ estado.estado_caso }}</option>
+
+      {% endfor %}
+    </select>
+</div>
+<div class="mb-3">
+<label class="form-label" for="fecha_apertura">Fecha de Apertura</label>
+<input class="form-control" id="fecha_apertura" name="fecha_apertura" required="" type="date" value="{{ caso.fecha_apertura.strftime('%Y-%m-%d') }}"/>
+</div>
+<div class="mb-3">
+<label class="form-label" for="descripcion">Descripción</label>
+<textarea class="form-control" id="descripcion" name="descripcion">{{ caso.descripcion }}</textarea>
+</div>
+<div class="mb-3">
+<label class="form-label" for="monto_total">Monto Total</label>
+<input class="form-control" id="monto_total" name="monto_total" required="" step="0.01" type="number" value="{{ caso.monto_total }}"/>
+</div>
+<div class="mb-3">
+  <label class="form-label" for="id_estado_pago">Estado de Pago</label>
+  <select class="form-select" id="id_estado_pago" name="id_estado_pago" required>
+    {% for estado_pago in estados_pago %}
+      <option value="{{ estado_pago.id_estado_pago }}" {% if estado_pago.id_estado_pago == caso.id_estado_pago %}selected{% endif %}>
+        {{ estado_pago.estado }}
+      </option>
+    {% endfor %}
+  </select>
+</div>
+
+<div class="form-check mb-3">
+  <input class="form-check-input" type="checkbox" id="activo" name="activo" {% if caso.activo %}checked{% endif %}>
+  <label class="form-check-label" for="activo">Activo</label>
+</div>
+
+<button class="btn btn-primary" style=" background-color:rgb(160, 105, 63); color: white; border: none;" type="submit">Actualizar</button>
+<a class="btn btn-secondary" href="{{ url_for('caso.index') }}" style=" background-color:rgb(168, 125, 67); color: white; border: none;">Cancelar</a>
+</form>
+{% endblock %}

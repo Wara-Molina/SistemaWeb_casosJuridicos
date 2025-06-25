@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %} DOCUMENTOS | EDIT {% endblock %}
+
+{% block content %}
+<h1>Editar Documento</h1>
+<form action="{{ url_for('documento.edit', id_documento=documento.id_documento) }}" enctype="multipart/form-data" method="POST">
+<div class="mb-3">
+<label class="form-label" for="id_caso">Caso</label>
+<select class="form-select" id="id_caso" name="id_caso" required="">
+            {% for caso in casos %}
+                <option value="{{ caso.id_caso }}" {% if documento.id_caso == caso.id_caso %}selected{% endif %}>
+            {{ caso.descripcion }}
+            </option>
+
+            {% endfor %}
+        </select>
+</div>
+<div class="mb-3">
+<label class="form-label" for="titulo">Título</label>
+<input class="form-control" id="titulo" name="titulo" required="" type="text" value="{{ documento.titulo }}"/>
+</div>
+<div class="mb-3">
+<label class="form-label" for="descripcion">Descripción</label>
+<textarea class="form-control" id="descripcion" name="descripcion" rows="3">{{ documento.descripcion }}</textarea>
+</div>
+<div class="mb-3">
+<label class="form-label" for="archivo">Archivo (dejar vacío para mantener el actual)</label>
+<input class="form-control" id="archivo" name="archivo" type="file"/>
+        {% if documento.archivo_path %}
+            <small>Archivo actual: <a href="{{ url_for('static', filename=documento.archivo_path) }}" target="_blank">Ver archivo</a></small>
+        {% endif %}
+    </div>
+<div class="form-check mb-3">
+<input type="checkbox" class="form-check-input" id="activo" name="activo" {% if documento.activo %}checked{% endif %}>
+
+<label class="form-check-label" for="activo">Activo</label>
+</div>
+<button class="btn btn-primary" style=" background-color:rgb(157, 107, 62); color: white; border: none;" type="submit">Actualizar Documento</button>
+<a class="btn btn-secondary" href="{{ url_for('documento.index') }}" style=" background-color:rgb(138, 99, 44); color: white; border: none;">Cancelar</a>
+</form>
+{% endblock %}

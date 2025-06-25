@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %} AUDIENCIAS | CREATE {% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Crear Audiencia para el Caso {{ id_caso }}</h2>
+
+    <form method="POST" action="">
+
+        <div class="mb-3">
+            <label for="fecha_audiencia">Fecha de Audiencia</label>
+            <input type="date" id="fecha_audiencia" name="fecha_audiencia" class="form-control" required>
+        </div>
+    
+
+        <div class="mb-3">
+            <label for="hora_audiencia">Hora de Audiencia</label>
+            <input type="time" id="hora_audiencia" name="hora_audiencia" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="lugar">Lugar</label>
+            <input type="text" id="lugar" name="lugar" class="form-control" required>
+        </div>
+    
+
+        <div class="mb-3">
+            <label for="observaciones">Observaciones</label>
+            <textarea id="observaciones" name="observaciones" class="form-control"></textarea>
+        </div>
+    
+        <div class="mb-3">
+            <label for="id_estado_audiencia">Estado</label>
+            <select id="id_estado_audiencia" name="id_estado_audiencia" class="form-select" required>
+                {% for estado in estados %}
+                <option value="{{ estado.id_estado_audiencia }}">{{ estado.nombre_estado_audiencia }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    
+        <button type="submit" class="btn btn-primary">Crear</button>
+        <a href="{{ url_for('audiencia.list', id_caso=id_caso) }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+    {% endblock %}

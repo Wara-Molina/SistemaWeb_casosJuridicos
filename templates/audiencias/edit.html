@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %} AUDIENCIAS | EDIT {% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+<h2>Editar Audiencia</h2>
+<form action="{{ url_for('audiencia.edit', id_audiencia=audiencia.id_audiencia) }}" method="POST">
+<div class="mb-3">
+<label class="form-label">Caso asociado</label>
+<input class="form-control" disabled="" type="text" value="{{ audiencia.caso.descripcion }}"/>
+</div>
+<div class="mb-3">
+<label class="form-label" for="fecha_audiencia">Fecha</label>
+<input class="form-control" name="fecha_audiencia" required="" type="date" value="{{ audiencia.fecha_audiencia }}"/>
+</div>
+<div class="mb-3">
+<label class="form-label" for="hora_audiencia">Hora</label>
+<input class="form-control" name="hora_audiencia" required="" type="time" value="{{ audiencia.hora_audiencia.strftime('%H:%M') }}"/>
+</div>
+<div class="mb-3">
+<label class="form-label" for="lugar">Lugar</label>
+<input class="form-control" name="lugar" required="" type="text" value="{{ audiencia.lugar }}"/>
+</div>
+<div class="mb-3">
+<label class="form-label" for="observaciones">Observaciones</label>
+<textarea class="form-control" name="observaciones">{{ audiencia.observaciones }}</textarea>
+</div>
+<div class="mb-3">
+<label class="form-label" for="id_estado_audiencia">Estado</label>
+<select class="form-select" name="id_estado_audiencia" required="">
+                {% for estado in estados %}
+                <option value="{{ estado.id_estado_audiencia }}"
+                     {% if audiencia.id_estado_audiencia == estado.id_estado_audiencia %}selected{% endif %}>
+                      {{ estado.nombre_estado_audiencia }}
+             </option>
+                {% endfor %}
+            </select>
+</div>
+<!-- Switch toggle para campo activo -->
+<div class="form-check form-switch mb-3">
+<input type="checkbox" class="form-check-input" id="activo" name="activo" value="1"
+       {% if audiencia.activo %}checked{% endif %}>
+
+<label class="form-check-label" for="activo">Audiencia activa</label>
+</div>
+<button class="btn btn-primary" style=" background-color:rgb(133, 64, 57); color: white; border: none; background-color:rgb(126, 81, 50); color: white; border: none;" type="submit">Actualizar</button>
+<a class="btn btn-secondary" href="{{ url_for('audiencia.index') }}" style=" background-color:rgb(134, 86, 43); color: white; border: none; background-color:rgb(142, 119, 49); color: white; border: none;">Cancelar</a>
+</form>
+</div>
+{% endblock %}

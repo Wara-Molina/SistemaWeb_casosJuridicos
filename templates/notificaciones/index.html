@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %} NOTIFICACIONES {% endblock %}
+
+{% block content %}
+
+<h2>Mis Notificaciones</h2>
+<a href="{{ url_for('notificacion.create') }}">Crear Notificación</a>
+<table border="1" cellpadding="5" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Mensaje</th>
+      <th>Fecha</th>
+      <th>Leído</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in notificaciones %}
+    <tr>
+      <td>{{ item.mensaje }}</td>
+      <td>{{ item.fecha.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+      <td>{{ 'Sí' if item.leido else 'No' }}</td>
+      <td>
+        <a href="{{ url_for('notificacion.edit', id_notificacion=item.id_notificacion) }}">Editar</a>
+        
+        <form method="post" action="{{ url_for('notificacion.mark_read', id_notificacion=item.id_notificacion) }}" style="display:inline;">
+          {% if not item.leido %}
+          <button type="submit">Marcar como leído</button>
+          {% endif %}
+        </form>
+
+        <form method="post" action="{{ url_for('notificacion.delete', id_notificacion=item.id_notificacion) }}" style="display:inline;" onsubmit="return confirm('¿Seguro que quieres eliminar esta notificación?');">
+          <button type="submit">Eliminar</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,122 @@
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<title>Recibo de Pago</title>
+<style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #e9ecef;
+            padding: 40px 20px;
+            color: #343a40;
+        }
+        .recibo {
+            max-width: 700px;
+            margin: auto;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            padding: 40px 50px 50px;
+            position: relative;
+        }
+        .logo {
+            display: block;
+            margin: 0 auto 25px;
+            max-width: 180px;
+            height: auto;
+        }
+        h2 {
+            text-align: center;
+            color: #007bff;
+            font-weight: 700;
+            letter-spacing: 1.3px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            border-bottom: 3px solid #007bff;
+            padding-bottom: 10px;
+        }
+        .dato {
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+        .dato strong {
+            display: inline-block;
+            width: 180px;
+            color: #0056b3;
+            font-weight: 600;
+        }
+        hr {
+            border: none;
+            border-top: 2px solid #dee2e6;
+            margin: 35px 0;
+        }
+        .total {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #28a745;
+            text-align: center;
+            margin-top: 30px;
+            letter-spacing: 0.7px;
+        }
+        .firmas {
+            margin-top: 55px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .firma-box {
+            width: 45%;
+            text-align: center;
+            font-size: 1rem;
+            color: #495057;
+        }
+        .firma-line {
+            margin-top: 75px;
+            border-top: 2px solid #6c757d;
+            width: 100%;
+            height: 2px;
+        }
+        .firma-nombre {
+            margin-top: 12px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+        }
+        /* Responsive */
+        @media (max-width: 600px) {
+            .firmas {
+                flex-direction: column;
+                gap: 40px;
+            }
+            .firma-box {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="recibo">
+<img alt="Logo Empresa" class="logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Flask_logo.svg/1200px-Flask_logo.svg.png"/>
+<h2>Recibo de Pago</h2>
+<div class="dato"><strong>N° Recibo:</strong> {{ pago.id_pago }}</div>
+<div class="dato"><strong>Fecha:</strong> {{ pago.fecha_pago.strftime('%d/%m/%Y') }}</div>
+<div class="dato"><strong>Cliente:</strong> {{ pago.caso.cliente.nombre }}</div>
+<div class="dato"><strong>Caso:</strong> {{ pago.caso.descripcion }}</div>
+<div class="dato"><strong>Monto pagado:</strong> Bs. {{ "{:.2f}".format(pago.monto_pagado) }}</div>
+<div class="dato"><strong>Método de pago:</strong> {{ pago.metodo_pago or 'No especificado' }}</div>
+<div class="dato"><strong>Observaciones:</strong> {{ pago.observaciones or 'Sin observaciones' }}</div>
+<hr/>
+<div class="dato"><strong>Total pagado:</strong> Bs. {{ "{:.2f}".format(pago.caso.total_pagado) }}</div>
+<div class="dato"><strong>Saldo restante:</strong> Bs. {{ "{:.2f}".format(pago.caso.saldo_restante) }}</div>
+<div class="total">¡Gracias por su pago!</div>
+<div class="firmas">
+<div class="firma-box">
+<div class="firma-line"></div>
+<div class="firma-nombre">Firma del Cliente</div>
+</div>
+<div class="firma-box">
+<div class="firma-line"></div>
+<div class="firma-nombre">Firma del Cobrador</div>
+</div>
+</div>
+</div>
+</body>
+</html>

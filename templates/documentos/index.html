@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %} DOCUMENTOS {% endblock %}
+
+{% block content %}
+
+<h1>Lista de Documentos</h1>
+<a class="btn btn-success mb-3" href="{{ url_for('documento.create') }}" style=" background-color:rgb(139, 91, 58); color: white; border: none;">Nuevo Documento</a>
+<table class="table table-striped">
+<thead>
+<tr>
+<th>ID</th>
+<th>Caso</th>
+<th>Título</th>
+<th>Descripción</th>
+<th>Archivo</th>
+<th>Fecha Subida</th>
+<th>Activo</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+        {% for doc in documentos %}
+        <tr>
+<td>{{ doc.id_documento }}</td>
+<td>{{ doc.caso.descripcion if doc.caso }}</td>
+<td>{{ doc.titulo }}</td>
+<td>{{ doc.descripcion or '' }}</td>
+<td>
+<a href="{{ url_for('static', filename=doc.archivo_path) }}" target="_blank">Ver Archivo</a>
+</td>
+<td>{{ doc.fecha_subida.strftime('%Y-%m-%d') if doc.fecha_subida }}</td>
+<td>{{ 'Sí' if doc.activo else 'No' }}</td>
+<td>
+<a class="btn btn-warning" href="{{ url_for('documento.edit', id_documento=doc.id_documento) }}" style=" background-color:rgb(156, 130, 51); color: white; border: none;">Editar</a>
+</td>
+<td>
+<form action="{{ url_for('documento.delete', id_documento=doc.id_documento) }}" method="post" onsubmit="return confirm('¿Está seguro de eliminar este documento?');" style="display:inline-block;">
+<button class="btn btn-danger" style=" background-color:rgb(164, 108, 64); color: white; border: none;" type="submit">Eliminar</button>
+</form>
+</td>
+</tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

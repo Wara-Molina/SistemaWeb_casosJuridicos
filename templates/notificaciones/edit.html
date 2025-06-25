@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %} NOTIFICACIONES | EDIT {% endblock %}
+
+{% block content %}
+<h2>Editar Notificación</h2>
+<form action="{{ url_for('notificacion.edit', id_notificacion=notificacion.id_notificacion) }}" method="post">
+  <label>Mensaje:</label><br>
+  <textarea name="mensaje" required>{{ notificacion.mensaje }}</textarea><br><br>
+  <button type="submit">Actualizar</button>
+</form>
+<a href="{{ url_for('notificacion.index') }}">Volver</a>
+{% endblock %}

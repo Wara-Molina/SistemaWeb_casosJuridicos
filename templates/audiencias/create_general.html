@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %} AUDIENCIAS | CREAR GENERAL {% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+<h1>Nueva Audiencia</h1>
+<form action="{{ url_for('audiencia.create_general') }}" method="POST">
+<div class="mb-3">
+<label class="form-label" for="id_caso">Caso</label>
+<select class="form-select" name="id_caso" required="">
+        {% for caso in casos %}
+        <option value="{{ caso.id_caso }}">{{ caso.descripcion }}</option>
+        {% endfor %}
+      </select>
+</div>
+<div class="mb-3">
+<label class="form-label" for="fecha_audiencia">Fecha</label>
+<input class="form-control" name="fecha_audiencia" required="" type="date"/>
+</div>
+<div class="mb-3">
+<label class="form-label" for="hora_audiencia">Hora</label>
+<input class="form-control" name="hora_audiencia" required="" type="time"/>
+</div>
+<div class="mb-3">
+<label class="form-label" for="lugar">Lugar</label>
+<input class="form-control" name="lugar" required="" type="text"/>
+</div>
+<div class="mb-3">
+<label class="form-label" for="observaciones">Observaciones</label>
+<textarea class="form-control" name="observaciones"></textarea>
+</div>
+<div class="mb-3">
+<label class="form-label" for="id_estado_audiencia">Estado</label>
+<select class="form-select" name="id_estado_audiencia" required="">
+        {% for estado in estados %}
+        <option value="{{ estado.id_estado_audiencia }}">{{ estado.nombre_estado_audiencia }}</option>
+        {% endfor %}
+      </select>
+</div>
+<div class="mb-3">
+<label class="form-label" for="activo">¿Audiencia activa?</label>
+<select class="form-select" id="activo" name="activo" required="">
+<option selected="" value="1">Sí</option>
+<option value="0">No</option>
+</select>
+</div>
+<button class="btn btn-primary" style=" background-color:rgb(173, 127, 70); color: white; border: none; background-color:rgb(169, 115, 67); color: white; border: none;" type="submit">Registrar Audiencia</button>
+<a class="btn btn-secondary" href="{{ url_for('audiencia.index') }}" style=" background-color:rgb(142, 91, 53); color: white; border: none; background-color:rgb(154, 119, 70); color: white; border: none;">Cancelar</a>
+</form>
+</div>
+{% endblock %}

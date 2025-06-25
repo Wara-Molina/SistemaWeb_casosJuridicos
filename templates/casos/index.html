@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Casos{% endblock %}
+
+{% block content %}
+<h2>Lista de Casos</h2>
+<a class="btn btn-primary mb-3" href="{{ url_for('caso.create') }}" style=" background-color:rgb(137, 71, 55); color: white; border: none;">Crear Nuevo Caso</a>
+<table class="table table-bordered">
+<thead>
+<tr>
+<th>ID</th>
+<th>Cliente</th>
+<th>Usuario</th>
+<th>Tipo</th>
+<th>Estado Caso</th>
+<th>Estado Pago</th>
+<th>Fecha Apertura</th>
+<th>Monto Total</th>
+<th>Activo</th>
+<th>Acciones</th>
+</tr>
+</thead>
+<tbody>
+    {% for caso in casos %}
+    <tr>
+<td>{{ caso.id_caso }}</td>
+<td>{{ caso.cliente.nombre }}</td>
+<td>{{ caso.usuario.nombre }}</td>
+<td>{{ caso.tipo.nombre_tipo }}</td>
+<td>{{ caso.estado_caso.estado_caso }}</td>
+<td>{{ caso.estado_pago.estado }}</td>
+<td>{{ caso.fecha_apertura.strftime('%Y-%m-%d') }}</td>
+<td>{{ caso.monto_total }}</td>
+<td>{{ 'Sí' if caso.activo else 'No' }}</td>
+<td>
+<a class="btn btn-sm btn-warning" href="{{ url_for('caso.edit', id_caso=caso.id_caso) }}" style=" background-color:rgb(152, 112, 64); color: white; border: none;">Editar</a>
+<form action="{{ url_for('caso.delete', id_caso=caso.id_caso) }}" method="post" onsubmit="return confirm('¿Eliminar caso?');" style="display:inline;">
+<button class="btn btn-sm btn-danger" style=" background-color:rgb(141, 92, 54); color: white; border: none;" type="submit">Eliminar</button>
+</form>
+</td>
+</tr>
+    {% else %}
+    <tr><td colspan="10">No hay casos registrados.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

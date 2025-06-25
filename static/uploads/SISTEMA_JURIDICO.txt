@@ -1,0 +1,22 @@
+cliente
+especialidad
+rol
+usuarios
+caso
+seguimiento
+documento
+pago
+audiencia
+notificacion
+-------------------
+estado_usuario
+estado_pago
+tipo_caso
+estado_caso
+estado audiencia
+---------------------------------- LOGIN
+bitacora
+notificacion (usuarios)
+
+
+

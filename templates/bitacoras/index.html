@@ -1,0 +1,18 @@
+<table class="table">
+    <thead>
+      <tr>
+        <th>Usuario</th>
+        <th>Acción</th>
+        <th>Fecha</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for b in bitacoras %}
+      <tr>
+        <td>{{ b.usuario.nombre }}</td>
+        <td>{{ b.accion }}</td>
+        <td>{{ b.fecha.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
